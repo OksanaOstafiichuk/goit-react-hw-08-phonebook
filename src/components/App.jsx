@@ -1,5 +1,8 @@
 import shortid from 'shortid';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { add, deleteContact, updateFilter } from '../redux/phoneBookSlice';
 
 import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -9,10 +12,9 @@ import { PhoneBook, Title, Contacts } from './App.styled';
 const LOCALSTORAGE_KEY = 'contacts';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(window.localStorage.getItem(LOCALSTORAGE_KEY)) ?? [];
-  });
-  const [filter, setFilter] = useState('');
+  const filter = useSelector(state => state.phoneBook.contacts.filter);
+  const contacts = useSelector(state => state.phoneBook.contacts.items);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(contacts));
@@ -28,17 +30,16 @@ export const App = () => {
     const findName = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
-
     if (findName) {
       alert(`${name} is already in contacts.`);
       return;
     } else {
-      setContacts(prevState => [...prevState, ...[contact]]);
+      dispatch(add(contact));
     }
   };
 
   const filterContacts = evt => {
-    setFilter(evt.currentTarget.value);
+    dispatch(updateFilter(evt.currentTarget.value));
   };
 
   const addFilter = () => {
@@ -47,10 +48,8 @@ export const App = () => {
     );
   };
 
-  const deleteContact = idContact => {
-    setContacts(prevState =>
-      contacts.filter(contact => contact.id !== idContact)
-    );
+  const contactDelete = idContact => {
+    dispatch(deleteContact(idContact));
   };
 
   return (
@@ -60,7 +59,7 @@ export const App = () => {
 
       <Contacts>Contacts</Contacts>
       <Filter value={filter} onChange={filterContacts} />
-      <ContactList contacts={addFilter()} onDelete={deleteContact} />
+      <ContactList contacts={addFilter()} onDelete={contactDelete} />
     </PhoneBook>
   );
 };
