@@ -52,7 +52,6 @@ export const App = () => {
     <PhoneBook>
       <Title>Phonebook</Title>
       <ContactForm onSubmit={addContact} />
-
       <Contacts>Contacts</Contacts>
       <Filter value={filter} onChange={filterContacts} />
       <ContactList contacts={addFilter()} onDelete={contactDelete} />
