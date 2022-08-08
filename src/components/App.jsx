@@ -1,6 +1,7 @@
 import shortid from 'shortid';
-import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { add, deleteContact, updateFilter } from '../redux/phoneBookSlice';
 
@@ -9,16 +10,10 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { PhoneBook, Title, Contacts } from './App.styled';
 
-const LOCALSTORAGE_KEY = 'contacts';
-
 export const App = () => {
   const filter = useSelector(state => state.phoneBook.contacts.filter);
   const contacts = useSelector(state => state.phoneBook.contacts.items);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    window.localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts]);
 
   const addContact = (name, number) => {
     const contact = {
@@ -30,8 +25,9 @@ export const App = () => {
     const findName = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
+    console.log(findName);
     if (findName) {
-      alert(`${name} is already in contacts.`);
+      toast.error(`${name} is already in contacts.`);
       return;
     } else {
       dispatch(add(contact));
@@ -60,6 +56,17 @@ export const App = () => {
       <Contacts>Contacts</Contacts>
       <Filter value={filter} onChange={filterContacts} />
       <ContactList contacts={addFilter()} onDelete={contactDelete} />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </PhoneBook>
   );
 };
