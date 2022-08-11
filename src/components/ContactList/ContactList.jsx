@@ -1,21 +1,24 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { renderList } from 'redux/phoneBookSlice';
 import { ContactItem } from 'components/ContacItem/ContactItem';
-import PropTypes from 'prop-types';
+
 import { List } from './ContactList.styled';
 
-export const ContactList = ({ contacts, onDelete }) => {
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.phoneBook.contacts.items);
+  const filter = useSelector(state => state.phoneBook.contacts.filter);
+
+  useEffect(() => {
+    dispatch(renderList(filter));
+  }, [dispatch, filter]);
+
   return (
     <List>
       {contacts.map(contact => (
-        <ContactItem key={contact.id} contact={contact} onDelete={onDelete} />
+        <ContactItem key={contact.id} contact={contact} />
       ))}
     </List>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ),
 };

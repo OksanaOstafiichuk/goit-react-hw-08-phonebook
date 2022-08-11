@@ -1,4 +1,10 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import shortid from 'shortid';
+import { toast } from 'react-toastify';
+
+import { add } from 'redux/phoneBookSlice';
+
 import { FilterInput } from '../Filter/Filter.styled';
 import { Button } from '../ContacItem/ContactItem.styled';
 import { Form, FormInput } from './ContactForm.styled';
@@ -6,6 +12,8 @@ import { Form, FormInput } from './ContactForm.styled';
 export const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.phoneBook.contacts.items);
 
   const hendelSaveContact = evt => {
     const { name, value } = evt.currentTarget;
@@ -27,9 +35,23 @@ export const ContactForm = ({ onSubmit }) => {
   const hendelSubmit = evt => {
     evt.preventDefault();
 
-    onSubmit(name, number);
-    setName('');
-    setNumber('');
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+
+    const findName = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (findName) {
+      toast.error(`${name} is already in contacts.`);
+      return;
+    } else {
+      dispatch(add(contact));
+      setName('');
+      setNumber('');
+    }
   };
 
   return (
