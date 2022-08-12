@@ -23,9 +23,6 @@ export const phoneBookSlice = createSlice({
       updateFilter: (state, action) => {
           state.contacts.filter = action.payload;
       },
-      renderList: (state, action) => {
-          state.contacts.items = state.contacts.items.filter(contact => contact.name.toLowerCase().includes(action.payload))
-      }
     },
 })
 
@@ -36,4 +33,4 @@ const persistConfig = {
 
 export const phoneBookReducer = persistReducer(persistConfig, phoneBookSlice.reducer)
 
-export const { add, deleteContact, updateFilter, renderList } = phoneBookSlice.actions;
+export const { add, deleteContact, updateFilter } = phoneBookSlice.actions;
