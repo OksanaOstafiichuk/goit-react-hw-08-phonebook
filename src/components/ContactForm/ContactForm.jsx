@@ -1,19 +1,17 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import shortid from 'shortid';
 import { toast } from 'react-toastify';
-
-import { add } from 'redux/phoneBookSlice';
 
 import { FilterInput } from '../Filter/Filter.styled';
 import { Button } from '../ContacItem/ContactItem.styled';
 import { Form, FormInput } from './ContactForm.styled';
+import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsApi';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.phoneBook.contacts.items);
+  const { data: contacts } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
   const hendelSaveContact = evt => {
     const { name, value } = evt.currentTarget;
@@ -48,7 +46,7 @@ export const ContactForm = ({ onSubmit }) => {
       toast.error(`${name} is already in contacts.`);
       return;
     } else {
-      dispatch(add(contact));
+      addContact(contact);
       setName('');
       setNumber('');
     }
