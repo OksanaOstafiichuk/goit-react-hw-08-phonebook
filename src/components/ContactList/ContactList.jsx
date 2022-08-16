@@ -4,20 +4,19 @@ import { ContactItem } from 'components/ContacItem/ContactItem';
 import { useGetContactsQuery } from 'redux/contactsApi';
 
 import { List } from './ContactList.styled';
+import { useMemo } from 'react';
 
 export const ContactList = () => {
   const filter = useSelector(state => state.phoneBook.contacts.filter);
   const { data: contacts, error, isLoading } = useGetContactsQuery();
 
-  const renderList = () => {
-    if (!contacts) {
-      return;
-    }
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter)
+  const renderList = useMemo(() => {
+    return (
+      contacts?.filter(contact =>
+        contact.name.toLowerCase().includes(filter)
+      ) ?? []
     );
-  };
+  }, [contacts, filter]);
 
   return (
     <>
@@ -26,7 +25,7 @@ export const ContactList = () => {
         <p>loading..</p>
       ) : (
         <List>
-          {renderList().map(contact => (
+          {renderList.map(contact => (
             <ContactItem key={contact.id} contact={contact} />
           ))}
         </List>
