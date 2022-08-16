@@ -7,7 +7,7 @@ import { List } from './ContactList.styled';
 import { useMemo } from 'react';
 
 export const ContactList = () => {
-  const filter = useSelector(state => state.phoneBook.contacts.filter);
+  const filter = useSelector(state => state.phoneBook.filter);
   const { data: contacts, error, isLoading } = useGetContactsQuery();
 
   const renderList = useMemo(() => {

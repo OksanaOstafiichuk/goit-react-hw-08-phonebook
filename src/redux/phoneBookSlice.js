@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  contacts: {
     filter: ''
-  }
 }
 
 export const phoneBookSlice = createSlice({
@@ -11,7 +9,7 @@ export const phoneBookSlice = createSlice({
     initialState,
     reducers: {
       updateFilter: (state, action) => {
-          state.contacts.filter = action.payload;
+          state.filter = action.payload;
       },
     },
 })

@@ -5,7 +5,7 @@ import { updateFilter } from '../../redux/phoneBookSlice';
 import { FilterInput } from './Filter.styled';
 
 export const Filter = () => {
-  const filter = useSelector(state => state.phoneBook.contacts.filter);
+  const filter = useSelector(state => state.phoneBook.filter);
   const dispatch = useDispatch();
 
   const filterContacts = evt => {
