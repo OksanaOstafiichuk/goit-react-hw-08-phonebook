@@ -1,19 +1,25 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Routes, Route } from 'react-router-dom';
 
-import { ContactList } from './ContactList/ContactList';
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
-import { PhoneBook, Title, Contacts } from './App.styled';
+import { PhoneBook } from './App.styled';
+import { AppBar } from './AppBar/AppBar';
+import { HomePage } from 'pages/HomePage/HomePage';
+import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
+import { LoginPage } from 'pages/LoginPage/LoginPage';
+import { RegisterPage } from 'pages/RegisterPage/RegisterPage';
 
 export const App = () => {
   return (
     <PhoneBook>
-      <Title>Phonebook</Title>
-      <ContactForm />
-      <Contacts>Contacts</Contacts>
-      <Filter />
-      <ContactList />
+      <AppBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="contacts" element={<ContactsPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+      </Routes>
+
       <ToastContainer
         position="top-right"
         autoClose={2000}
