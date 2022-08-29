@@ -13,7 +13,7 @@ export const ContactForm = () => {
   const { data: contacts } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
 
-  const hendelSaveContact = evt => {
+  const handelSaveContact = evt => {
     const { name, value } = evt.currentTarget;
 
     switch (name) {
@@ -30,7 +30,7 @@ export const ContactForm = () => {
     }
   };
 
-  const hendelSubmit = evt => {
+  const handelSubmit = evt => {
     evt.preventDefault();
 
     const contact = {
@@ -53,7 +53,7 @@ export const ContactForm = () => {
   };
 
   return (
-    <Form onSubmit={hendelSubmit}>
+    <Form onSubmit={handelSubmit}>
       <FormInput>
         <span>Name</span>
         <FilterInput
@@ -63,7 +63,7 @@ export const ContactForm = () => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           value={name}
-          onChange={hendelSaveContact}
+          onChange={handelSaveContact}
         />
       </FormInput>
       <FormInput>
@@ -75,7 +75,7 @@ export const ContactForm = () => {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           value={number}
-          onChange={hendelSaveContact}
+          onChange={handelSaveContact}
         />
       </FormInput>
       <Button type="submit">Add contact</Button>
