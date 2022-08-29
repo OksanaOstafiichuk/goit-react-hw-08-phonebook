@@ -1,13 +1,15 @@
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
+import { useCreateUserMutation } from '../../redux/authApi';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const RegisterForm = () => {
-  const [validated, setValidated] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [createUser] = useCreateUserMutation();
 
   const handleChange = evt => {
     const { name, value } = evt.currentTarget;
@@ -33,26 +35,16 @@ export const RegisterForm = () => {
   const handelSubmit = evt => {
     evt.preventDefault();
 
-    // const form = evt.currentTarget;
-    // if (
-    //   form.checkValidity() !== false ||
-    //   name !== '' ||
-    //   email !== '' ||
-    //   password !== ''
-    // ) {
-    //   console.log({ name, email, password });
-    //   evt.stopPropagation();
-    //   return;
-    // }
+    createUser({ name, email, password });
     console.log({ name, email, password });
+
     setName('');
     setEmail('');
     setPassword('');
-    setValidated(true);
   };
 
   return (
-    <Form noValidate validated={validated} onSubmit={handelSubmit}>
+    <Form onSubmit={handelSubmit}>
       <Form.Group className="mb-3" controlId="formBasicName">
         <Form.Label>User name</Form.Label>
         <Form.Control
@@ -63,9 +55,6 @@ export const RegisterForm = () => {
           placeholder="User name"
           required
         />
-        {/* <Form.Control.Feedback type="invalid">
-          Please choose a username.
-        </Form.Control.Feedback> */}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -78,9 +67,6 @@ export const RegisterForm = () => {
           placeholder="Enter email"
           required
         />
-        {/* <Form.Control.Feedback type="invalid">
-          Please choose an email.
-        </Form.Control.Feedback> */}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -93,15 +79,9 @@ export const RegisterForm = () => {
           placeholder="Password"
           required
         />
-        {/* <Form.Control.Feedback type="invalid">
-          Please choose a password.
-        </Form.Control.Feedback> */}
       </Form.Group>
-      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group> */}
       <Button variant="primary" type="submit">
-        Submit
+        Sing in
       </Button>
     </Form>
   );

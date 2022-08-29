@@ -1,17 +1,17 @@
 import { Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
+import { useLoginUserMutation } from '../../redux/authApi';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginUser] = useLoginUserMutation();
 
   const handleChange = evt => {
     const { name, value } = evt.currentTarget;
-    console.log(evt.currentTarget.name);
-    console.log(evt.currentTarget.value);
 
     switch (name) {
       case 'email':
@@ -31,6 +31,7 @@ export const LoginForm = () => {
     evt.preventDefault();
 
     console.log({ email, password });
+    loginUser({ email, password });
     setEmail('');
     setPassword('');
   };
@@ -62,7 +63,7 @@ export const LoginForm = () => {
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group> */}
       <Button variant="primary" type="submit">
-        Submit
+        Login
       </Button>
     </Form>
   );
