@@ -5,6 +5,7 @@ const initialState = {
   password: '',
   email: '',
   token: '',
+  isLoggedIn: false,
 };
 
 export const userSlice = createSlice({
@@ -17,6 +18,7 @@ export const userSlice = createSlice({
         state.email = payload.user.email;
         state.password = payload.user.password;
         state.token = payload.token;
+        state.isLoggedIn = true;
       }
     )
     builder.addMatcher(
@@ -24,6 +26,7 @@ export const userSlice = createSlice({
       (state, { payload }) => {
         state.email = payload.user.email;
         state.password = payload.user.password;
+        state.isLoggedIn = true;
       }
     );
   },
