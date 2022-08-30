@@ -1,7 +1,11 @@
+import { useSelector } from 'react-redux';
+
 export const UserMenu = () => {
+  const email = useSelector(state => state.user.email);
+  console.log(email);
   return (
     <>
-      <p>Hello, User email</p>
+      <p>Hello, {email}</p>
       <button type="button">Log out</button>
     </>
   );

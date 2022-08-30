@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { authApi } from './authApi';
 
 const initialState = {
-  name: '',
+  password: '',
   email: '',
   token: '',
 };
@@ -10,22 +10,24 @@ const initialState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    getUser: (state, { payload }) => {
-      state.email = payload.email;
-      state.name = payload.name;
-    },
-  },
   extraReducers: builder => {
     builder.addMatcher(
       authApi.endpoints.createUser.matchFulfilled,
       (state, { payload }) => {
         state.email = payload.user.email;
-        state.name = payload.user.name;
+        state.password = payload.user.password;
         state.token = payload.token;
+      }
+    )
+    builder.addMatcher(
+      authApi.endpoints.loginUser.matchFulfilled,
+      (state, { payload }) => {
+        state.email = payload.user.email;
+        state.password = payload.user.password;
       }
     );
   },
+  
 });
 
 
