@@ -8,8 +8,12 @@ import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage';
 import { PrivateRoutes } from './PrivateRoutes/PrivateRoutes';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+
   return (
     <PhoneBook>
       <AppBar />
@@ -17,10 +21,18 @@ export const App = () => {
         <Route path="/" element={<HomePage />} />
 
         <Route path="/" element={<PrivateRoutes />}>
-          <Route path="contacts" element={<ContactsPage />} />
+          <Route
+            path="contacts"
+            element={
+              isLoggedIn ? <Navigate replace to="contacts" /> : <ContactsPage />
+            }
+          />
         </Route>
 
-        <Route path="login" element={<LoginPage />} />
+        <Route
+          path="login"
+          element={isLoggedIn ? <Navigate replace to="/" /> : <LoginPage />}
+        />
         <Route path="register" element={<RegisterPage />} />
       </Routes>
 
