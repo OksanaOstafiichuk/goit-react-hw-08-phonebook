@@ -28,6 +28,15 @@ export const userSlice = createSlice({
         state.password = payload.user.password;
         state.isLoggedIn = true;
       }
+    )
+    builder.addMatcher(
+      authApi.endpoints.logoutUser.matchFulfilled,
+      (state, _) => {
+        state.email = '';
+        state.password = '';
+        state.token = '';
+        state.isLoggedIn = false;
+      }
     );
   },
   

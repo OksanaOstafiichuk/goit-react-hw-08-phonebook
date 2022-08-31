@@ -8,7 +8,7 @@ export const authApi = createApi({
       const { token = '' } = getState().user;
 
       headers.set('Authorization', token);
-
+      // headers.unset('Authorization', '');
       return headers;
     },
   }),
@@ -37,6 +37,16 @@ export const authApi = createApi({
       invalidatesTags: ['User'],
     }),
 
+   logoutUser: builder.mutation({
+      query() {
+        return {
+          url: 'logout',
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['User'],
+   }),
+   
     currentUser: builder.query({
       query: () => 'current',
       providesTags: ['User'],
@@ -44,4 +54,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useCreateUserMutation, useLoginUserMutation, useCurrentUserQuery } = authApi;
+export const { useCreateUserMutation, useLoginUserMutation, useLogoutUserMutation, useCurrentUserQuery } = authApi;
