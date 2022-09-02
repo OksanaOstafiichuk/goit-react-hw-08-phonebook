@@ -1,5 +1,7 @@
-import { ContactForm } from '../../components/ContactForm/ContactForm';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { ContactForm } from '../../components/ContactForm/ContactForm';
 import { ModalW } from '../../components/ModalWindow/ModalWindow';
 
 import { Home, Text, ButtonHome, Context } from './HomePage.styled';
@@ -7,8 +9,13 @@ import { Container } from 'components/App.styled';
 
 export const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const handelAddContact = () => {
     setShowModal(!showModal);
   };
 
@@ -17,10 +24,15 @@ export const HomePage = () => {
       <Container>
         <Context>
           <Text>Best Phone Book app</Text>
-          <ButtonHome onClick={() => setShowModal(!showModal)}>
-            Add contact
-          </ButtonHome>
-          <ButtonHome>All contacts</ButtonHome>
+          {isLoggedIn && (
+            <>
+              <ButtonHome onClick={() => handelAddContact()}>
+                Add contact
+              </ButtonHome>
+
+              <ButtonHome>All contacts</ButtonHome>
+            </>
+          )}
         </Context>
 
         {showModal && (
@@ -28,8 +40,6 @@ export const HomePage = () => {
             <ContactForm />
           </ModalW>
         )}
-
-        {/* <ContactForm /> */}
       </Container>
     </Home>
   );
