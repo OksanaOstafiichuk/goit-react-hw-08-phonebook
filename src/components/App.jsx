@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from 'react-router-dom';
+
 import { PhoneBook } from './App.styled';
 import { AppBar } from './AppBar/AppBar';
 import { HomePage } from 'pages/HomePage/HomePage';
@@ -8,6 +9,7 @@ import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
 import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
