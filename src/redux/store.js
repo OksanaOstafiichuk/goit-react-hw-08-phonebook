@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query'
 import {
   persistStore,
-persistReducer,
+  persistReducer,
 
   FLUSH,
   REHYDRATE,

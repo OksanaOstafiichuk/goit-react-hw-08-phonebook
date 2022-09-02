@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import { toast } from 'react-toastify';
 
 import { FilterInput } from '../Filter/Filter.styled';
-import { Button } from '../ContacItem/ContactItem.styled';
+import { Button } from '../ContactItem/ContactItem.styled';
 import { Form, FormInput } from './ContactForm.styled';
 import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsApi';
 
