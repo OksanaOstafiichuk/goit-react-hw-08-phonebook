@@ -1,19 +1,21 @@
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-// import { Title } from '../App.styled';
+import { Title, ContactsLink } from './Navigation.styled';
 
 export const Navigation = () => {
-  const token = useSelector(state => state.user.token);
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   return (
-    <div>
-      <NavLink to="/">Phonebook</NavLink>
-      {token ? (
-        <>
-          <NavLink to="contacts">Contacts</NavLink>
-        </>
+    <>
+      <li>
+        <Title to="/">Phonebook</Title>
+      </li>
+
+      {isLoggedIn ? (
+        <li>
+          <ContactsLink to="contacts">Contacts</ContactsLink>
+        </li>
       ) : null}
-    </div>
+    </>
   );
 };

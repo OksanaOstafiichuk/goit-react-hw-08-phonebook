@@ -30,7 +30,6 @@ export const LoginForm = () => {
   const handelSubmit = evt => {
     evt.preventDefault();
 
-    console.log({ email, password });
     loginUser({ email, password });
     setEmail('');
     setPassword('');

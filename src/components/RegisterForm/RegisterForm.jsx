@@ -36,7 +36,6 @@ export const RegisterForm = () => {
     evt.preventDefault();
 
     createUser({ name, email, password });
-    console.log({ name, email, password });
 
     setName('');
     setEmail('');

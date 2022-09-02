@@ -1,5 +1,11 @@
 import { RegisterForm } from 'components/RegisterForm/RegisterForm';
 
+import { Container } from 'components/App.styled';
+
 export const RegisterPage = () => {
-  return <RegisterForm />;
+  return (
+    <Container>
+      <RegisterForm />
+    </Container>
+  );
 };
