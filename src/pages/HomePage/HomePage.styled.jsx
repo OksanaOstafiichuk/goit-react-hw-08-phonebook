@@ -17,13 +17,12 @@ export const Context = styled.div`
 `;
 
 export const Text = styled.p`
-  display: inline-block;
+  margin: 0 auto;
   background-color: #e7f3ff;
   padding: 40px 20px;
   border-radius: 6px;
   font-size: 42px;
   font-weight: 600;
-  width: 300px;
   text-align: center;
   color: #385898;
 `;
@@ -39,4 +38,9 @@ export const ButtonHome = styled.button`
   background-color: #e7f3ff;
   margin-left: 10px;
   cursor: pointer;
+
+  a {
+    text-decoration: none;
+    color: #385898;
+  }
 `;

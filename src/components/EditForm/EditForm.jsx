@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import shortid from 'shortid';
 import { toast } from 'react-toastify';
 
 import { FilterInput } from '../Filter/Filter.styled';
 import { Button } from '../ContactItem/ContactItem.styled';
-import { Form, FormInput } from './ContactForm.styled';
-import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsApi';
+import { Form, FormInput } from '../ContactForm/ContactForm.styled';
+import { useEditContactMutation } from 'redux/contactsApi';
 
-export const ContactForm = ({ onClose }) => {
+export const EditForm = ({ onClose, contact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const { data: contacts } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [editContact] = useEditContactMutation();
 
   const handelSaveContact = evt => {
     const { name, value } = evt.currentTarget;
+    console.log(name, value);
 
     switch (name) {
       case 'name':
@@ -33,24 +32,20 @@ export const ContactForm = ({ onClose }) => {
   const handelSubmit = evt => {
     evt.preventDefault();
 
-    const contact = {
-      id: shortid.generate(),
+    const updateContact = {
       name,
       number,
     };
+    console.log(contact.id);
+    console.log(contact.name);
+    console.log(contact.number);
 
-    const findName = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (findName) {
-      toast.error(`${name} is already in contacts.`);
-      return;
-    } else {
-      addContact(contact);
-      setName('');
-      setNumber('');
-      onClose();
-    }
+    editContact({ id: contact.id, payload: updateContact });
+    setName('');
+    setNumber('');
+    onClose();
+
+    toast.success('Contact changed successfully!');
   };
 
   return (
@@ -79,7 +74,7 @@ export const ContactForm = ({ onClose }) => {
           onChange={handelSaveContact}
         />
       </FormInput>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">Save change</Button>
     </Form>
   );
 };

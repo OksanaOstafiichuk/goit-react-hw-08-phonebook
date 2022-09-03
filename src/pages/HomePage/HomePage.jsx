@@ -6,6 +6,7 @@ import { ModalW } from '../../components/ModalWindow/ModalWindow';
 
 import { Home, Text, ButtonHome, Context } from './HomePage.styled';
 import { Container } from 'components/App.styled';
+import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,29 +16,28 @@ export const HomePage = () => {
     setShowModal(!showModal);
   };
 
-  const handelAddContact = () => {
-    setShowModal(!showModal);
-  };
-
   return (
     <Home>
       <Container>
         <Context>
-          <Text>Best Phone Book app</Text>
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
-              <ButtonHome onClick={() => handelAddContact()}>
+              <ButtonHome onClick={() => setShowModal(!showModal)}>
                 Add contact
               </ButtonHome>
 
-              <ButtonHome>All contacts</ButtonHome>
+              <ButtonHome>
+                <Link to="contacts">All contacts</Link>
+              </ButtonHome>
             </>
+          ) : (
+            <Text>Welcome to the your Phone Book!</Text>
           )}
         </Context>
 
         {showModal && (
           <ModalW onClose={toggleModal}>
-            <ContactForm />
+            <ContactForm onClose={toggleModal} />
           </ModalW>
         )}
       </Container>

@@ -2,12 +2,13 @@ import styled from 'styled-components';
 
 export const Item = styled.li`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #888;
 `;
 export const Button = styled.button`
-  margin-left: auto;
+  margin-left: 10px;
   padding: 0 20px;
   outline: none;
   border: none;
@@ -20,4 +21,9 @@ export const Button = styled.button`
   color: #385898;
   background-color: #e7f3ff;
   cursor: pointer;
+`;
+
+export const ButtonList = styled.div`
+  display: flex;
+  justify-content: end;
 `;
